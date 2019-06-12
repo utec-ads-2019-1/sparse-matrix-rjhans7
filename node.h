@@ -15,13 +15,14 @@ protected:
 
 public:
     Node() = default;
-    Node(unsigned _posR, unsigned _posC){
+
+    Node(unsigned _posR, unsigned _posC){ //Para Headers
         posR = _posR;
         posC = _posC;
         this->next = this->down = nullptr;
     };
 
-    Node(T _data, unsigned _posR, unsigned _posC){
+    Node(T _data, unsigned _posR, unsigned _posC){ //Para nodos
         data = _data;
         posR = _posR;
         posC = _posC;

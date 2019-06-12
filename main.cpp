@@ -1,38 +1,23 @@
 #include <iostream>
 #include "matrix.h"
-//#include "tester/tester.cpp"
+#include "tester/tester.cpp"
 
 int main() {
-    //Tester::execute();
-    int n=10, c=10;
+   // Tester::execute();
 
-    //indices inician desde 1 (FILA, COLUMNA)
-    auto myMatrix = new Matrix<int>(n, c);
+       int n=5, c=5;
 
-    for (int i = 1; i <= n; i=i+3) {
-        for (int j = 1; j <=c; j = j+2){
-            myMatrix->set(i, j, rand()%100+1);
-            cout << (*myMatrix)(i,j) << " ";
-        }
-        cout << endl;
-    }
+       //indices inician desde 1 (FILA, COLUMNA)
+       auto myMatrix = new Matrix<int>(n, c);
+       auto myMatri2 = new Matrix<int>(n, c);
+       myMatrix->set(0,1,3);
+       myMatrix->set(1,0,2);
+       myMatrix->set(1,2,2);
+       myMatrix->set(2,1,1);
+       myMatri2->set(0,0,1);
+       myMatri2->set(1,0,2);
 
-
-    for (int i = 1; i <= n; i=i+3) {
-        for (int j = 1; j <=c; j = j+2){
-            cout << ((*myMatrix)*(-1))(i,j)  << " ";
-        }
-        cout << endl;
-    }
-
-    for (int i = 1; i <= c; i=i+2) {
-        for (int j = 1; j <=n; j = j+3){
-            cout << myMatrix->transpose()(i,j) << " ";
-        }
-        cout << endl;
-    }
-
-
+       auto resultado = (*myMatrix)*(*myMatri2);
 
     return EXIT_SUCCESS;
 }
