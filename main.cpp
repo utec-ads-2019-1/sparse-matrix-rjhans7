@@ -25,9 +25,9 @@ int main() {
         cout << endl;
     }
 
-    for (int i = 1; i <= n; i=i+3) {
-        for (int j = 1; j <=c; j = j+2){
-            cout << ((*myMatrix)+(((*myMatrix)*(-1))))(i,j)  << " ";
+    for (int i = 1; i <= c; i=i+2) {
+        for (int j = 1; j <=n; j = j+3){
+            cout << myMatrix->transpose()(i,j) << " ";
         }
         cout << endl;
     }

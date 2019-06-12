@@ -140,9 +140,18 @@ public:
 
     };
     Matrix<T> transpose() const{
-
-    };
-    void printFull() const{
+        auto newMatriz = new Matrix <T>(columns, rows);
+        auto temp = root;
+        while(temp->down){
+            temp = temp->down;
+            auto temp2 = temp;
+            while(temp->next){
+                temp = temp->next;
+                newMatriz->set(temp->posC, temp->posR, temp->data);
+            }
+            temp = temp2;
+        }
+        return *newMatriz;
     };
     void print() const {
 
