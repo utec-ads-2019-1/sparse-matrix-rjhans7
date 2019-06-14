@@ -93,31 +93,30 @@ public:
     Matrix<T> operator*(Matrix<T> other) const{
         if(columns == other.rows) { //colA = rowB
             auto newMatriz = new Matrix<T>(rows, other.columns);
-
-            auto tempOther = other.root;
-            auto temp = root;
-            while(tempOther->next){
-                tempOther = tempOther->next;
-                    while (temp->down) {
-                    temp = temp->down;
-                    auto temp2 = temp;
-                    auto tempOther2 = tempOther;
+            auto tempA = root;
+            auto tempB = other.root; //usar cuatro punteros tax tay tbx tby
+            while(tempB->next){
+                tempB = tempB->next;
+                    while (tempA->down) {
+                    tempA = tempA->down;
+                    auto tempA2 = tempA;
+                    auto tempB2 = tempB;
                     T suma=0;
-                    while (temp->next) {
-                        temp = temp->next;
-                        auto tempOther3 = tempOther;
-                        while (tempOther->down) {
-                            tempOther = tempOther->down;
-                            if (temp->posC == tempOther->posR) {
-                                suma += temp->data * tempOther->data;
+                    while (tempA->next) {
+                        tempA = tempA->next;
+                        auto tempB3 = tempB;
+                        while (tempB->down) {
+                            tempB = tempB->down;
+                            if (tempA->posC == tempB->posR) {
+                                suma += tempA->data * tempB->data;
                                 break;
                             }
                         }
-                        tempOther = tempOther3;
+                        tempB = tempB3;
                     }
-                    newMatriz->set(temp->posR, tempOther->posC, suma);
-                    temp = temp2;
-                    tempOther = tempOther2;
+                    newMatriz->set(tempA->posR, tempB->posC, suma);
+                    tempA = tempA2;
+                    tempB = tempB2;
                 }
             }
             return *newMatriz;
@@ -187,7 +186,22 @@ public:
         return *newMatriz;
     };
     void print() const {
-
+        auto temp = root;
+        for(int i = 0; i < rows; i++){
+            temp = temp->down;
+            auto temp2 = temp;
+            for(int j = 0; j < columns; j++ ){
+                if(temp->next && temp->next->posC==j){
+                    temp = temp->next;
+                    cout << temp->data << " ";
+                }else{
+                    cout << "0" << " ";
+                }
+            }
+            cout << endl;
+            temp = temp2;
+        }
+        cout << endl;
     };
 
     ~Matrix(){
