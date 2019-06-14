@@ -7,10 +7,27 @@ class Matrix;
 template <typename T>
 class Node {
 protected:
-    Node<T> *next, *down;
+    T data;
+    unsigned posR, posC;
+    Node <T>* next;
+    Node <T>* down;
+
 
 public:
-    explicit Node();
+    Node() = default;
+
+    Node(unsigned _posR, unsigned _posC){ //Para Headers
+        posR = _posR;
+        posC = _posC;
+        this->next = this->down = nullptr;
+    };
+
+    Node(T _data, unsigned _posR, unsigned _posC){ //Para nodos
+        data = _data;
+        posR = _posR;
+        posC = _posC;
+        this->next = this->down = nullptr;
+    };
 
     friend class Matrix<T>;
 };

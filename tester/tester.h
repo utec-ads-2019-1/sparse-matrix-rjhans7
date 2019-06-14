@@ -7,7 +7,7 @@
 #include <vector>
 #include <algorithm>   
 
-#include "../mocker/mocker.h"
+#include "../mocker/mocker.cpp"
 #include "../matrix.h"
 
 using namespace std;
