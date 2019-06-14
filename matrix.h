@@ -93,25 +93,32 @@ public:
     Matrix<T> operator*(Matrix<T> other) const{
         if(columns == other.rows) { //colA = rowB
             auto newMatriz = new Matrix<T>(rows, other.columns);
+
             auto tempOther = other.root;
             auto temp = root;
-            while (temp->down) {
-                temp = temp->down;
+            while(tempOther->next){
                 tempOther = tempOther->next;
-                auto temp2 = temp;
-                auto tempOther2 = tempOther;
-                T suma=0;
-                while (temp->next) {
-                    temp = temp->next;
-                    tempOther = tempOther->down;
-
-                    if(temp->posC==tempOther->posR)
-                        suma +=temp->data*tempOther->data;
+                    while (temp->down) {
+                    temp = temp->down;
+                    auto temp2 = temp;
+                    auto tempOther2 = tempOther;
+                    T suma=0;
+                    while (temp->next) {
+                        temp = temp->next;
+                        auto tempOther3 = tempOther;
+                        while (tempOther->down) {
+                            tempOther = tempOther->down;
+                            if (temp->posC == tempOther->posR) {
+                                suma += temp->data * tempOther->data;
+                                break;
+                            }
+                        }
+                        tempOther = tempOther3;
+                    }
+                    newMatriz->set(temp->posR, tempOther->posC, suma);
+                    temp = temp2;
+                    tempOther = tempOther2;
                 }
-                newMatriz->set(temp->posR, tempOther->posC, suma);
-
-                temp = temp2;
-                tempOther = tempOther2;
             }
             return *newMatriz;
         }else
