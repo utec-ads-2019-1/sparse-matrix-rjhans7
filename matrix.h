@@ -29,17 +29,21 @@ public:
         auto tempC = new Node<T>(); //columna
         auto tempR = new Node<T>(); //fila
 
-        //Link en fila (controlar cuando el data es 0)
+
         findPosR(_posR, _posC, tempR);
+
         if(tempR->down){
+            auto temp = tempR->down;
             if(tempR->down->posR == _posR){ //Si es que ya existe un valor en dicha posición
-                auto temp = tempR->down;
-                tempR->down = newNodeIn;
-                newNodeIn->down = temp->down;
-                delete temp;
+                if(newNodeIn->data != 0){ //controla si se inserta un cero
+                    tempR->down = newNodeIn;
+                    newNodeIn->down = temp->down;
+                }else{
+                    tempR->down = temp->down;
+                    delete newNodeIn;
+                }
             }
             else{
-                auto temp = tempR->down;
                 tempR->down = newNodeIn;
                 newNodeIn->down = temp;
             }
@@ -49,13 +53,16 @@ public:
         //Link en columna
         findPosC(_posR, _posC, tempC);
         if(tempC->next){
-            if (tempC->next->posC==_posC){ //Si es que ya existe un valor en dicha posición
-                auto temp = tempC->next;
-                tempC->next = newNodeIn;
-                newNodeIn->next = temp->next;
+            auto temp = tempC->next;
+            if (tempC->next->posC == _posC){ //Si es que ya existe un valor en dicha posición
+                if(newNodeIn->data != 0) {//controla si se inserta un cero
+                    tempC->next = newNodeIn;
+                    newNodeIn->next = temp->next;
+                }else{
+                    tempC->next = temp->next;
+                }
                 delete temp;
             }else {
-                auto temp = tempC->next;
                 tempC->next = newNodeIn;
                 newNodeIn->next = temp;
             }
@@ -94,7 +101,7 @@ public:
         if(columns == other.rows) { //colA = rowB
             auto newMatriz = new Matrix<T>(rows, other.columns);
             auto tempA = root;
-            auto tempB = other.root; //usar cuatro punteros tax tay tbx tby
+            auto tempB = other.root;
             while(tempB->next){
                 tempB = tempB->next;
                     while (tempA->down) {

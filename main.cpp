@@ -15,11 +15,14 @@ int main() {
        myMatrix->set(1,2,2);
        myMatrix->set(2,0,1);
        myMatrix->set (2,2,3);
+       myMatrix->print();
+
+       myMatrix->set(0,1,0);
+       myMatrix->print();
 
        myMatri2->set(0,0,1);
        myMatri2->set(1,0,2);
 
-       myMatrix->print();
 
        myMatri2->print();
        auto resultado = (*myMatrix)*(*myMatri2);
