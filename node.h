@@ -29,6 +29,15 @@ public:
         this->next = this->down = nullptr;
     };
 
+    void operator delete(void* ptr, size_t sz){
+        free (ptr);
+    }
+
+    void killSelf(){
+        delete this;
+    }
+
+
     friend class Matrix<T>;
 };
 

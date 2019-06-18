@@ -211,10 +211,57 @@ public:
         cout << endl;
     };
 
+    void toDelete(Node <T>* &temp){
+        while(temp->next){
+            toDelete(temp->next);
+        }
+        temp->killSelf();
+        temp = nullptr;
+    }
     ~Matrix(){
+/*
+        int iterC = columns-1;
+        int iterR = rows-1;
+
+        while(iterC || iterR){
+            auto tempR = &root;
+            auto tempC = &root;
+
+
+            while((*tempR)->down->down || (*tempC)->next->next){
+                if ((*tempR)->down->down) tempR = &((*tempR)->down->down);
+                if ((*tempC)->next->next) tempC = &((*tempC)->next->next);
+            }
+            while((*tempR)->next || (*tempC)->down){
+                if((*tempR)->next) tempR = &((*tempR)->next);
+                if((*tempC)->down) tempC = &((*tempC)->down);
+            }
+            delete *tempR;
+            delete *tempC;
+            tempR = nullptr;
+            tempC = nullptr;
+            iterC--;
+            iterR--;
+        }
+
+*/
+
+
+
+
+    for(int i = rows; i >= 0; i--){
+        auto temp = root;
+        while(temp->down){
+            temp = temp->down;
+        }
+        toDelete(temp);
+        //temp = nullptr;
+    }
+
+
+
 
     };
-
 protected:
 
     bool createRowsHeaders(){
