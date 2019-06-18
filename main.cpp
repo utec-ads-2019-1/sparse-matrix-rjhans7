@@ -6,7 +6,6 @@ int main() {
     Tester::execute();
 
     /*
-        //indices inician desde 1 (FILA, COLUMNA)
         auto myMatrix = new Matrix<int>(3, 3);
         auto myMatri2 = new Matrix<int>(3, 1);
         myMatrix->set(0, 0, 3);
