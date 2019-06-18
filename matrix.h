@@ -248,7 +248,7 @@ public:
 
 
 
-
+/*
     for(int i = rows; i >= 0; i--){
         auto temp = root;
         while(temp->down){
@@ -260,7 +260,7 @@ public:
 
 
 
-
+*/
     };
 protected:
 
