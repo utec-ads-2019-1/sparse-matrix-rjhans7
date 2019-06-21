@@ -30,6 +30,8 @@ public:
     };
 
     void killSelf(){
+        if(next!=nullptr)
+            next->killSelf();
         delete this;
     }
 
