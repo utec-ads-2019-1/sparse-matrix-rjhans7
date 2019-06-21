@@ -80,7 +80,7 @@ public:
             if(temp->posR == _posR)
                 return temp->data;
         }
-       throw out_of_range ("No se encontró el valor solicitado!");
+        return 0;
     };
 
     Matrix<T> operator*(T scalar) const{
@@ -143,10 +143,25 @@ public:
                 tempOther = tempOther->down;
                 auto temp2 = temp;
                 auto tempOther2 = tempOther;
-                while (temp->next) {
-                    temp = temp->next;
-                    tempOther = tempOther->next;
-                    newMatriz->set(temp->posR, temp->posC, temp->data + tempOther->data);
+                while ((temp && temp->next) || (tempOther && tempOther->next) ) { //la columna tiene next
+                    if(temp && tempOther && (temp->next && tempOther->next)) {
+                        temp = temp->next;
+                        tempOther = tempOther->next;
+                        if (temp && tempOther && temp->posC == tempOther->posC) //tienen el mismo colum
+                            newMatriz->set(temp->posR, temp->posC, temp->data + tempOther->data);
+                        else if (temp && tempOther && temp->posC > tempOther->posC) //tienen next pero diferente colum
+                            newMatriz->set(temp->posR, temp->posC, temp->data);
+                        else if (temp && tempOther && temp->posC < tempOther->posC) // tienen next pero diferente column
+                            newMatriz->set(tempOther->posR, tempOther->posC, tempOther->data);
+                    }
+                    else if((temp && temp->next)){
+                        temp = temp->next;
+                        newMatriz->set(temp->posR, temp->posC, temp->data);
+                    }
+                    else if((tempOther && tempOther->next )){
+                        tempOther = tempOther->next;
+                        newMatriz->set(tempOther->posR, tempOther->posC, tempOther->data);
+                    }
                 }
                 temp = temp2;
                 tempOther = tempOther2;
@@ -165,10 +180,25 @@ public:
                 tempOther = tempOther->down;
                 auto temp2 = temp;
                 auto tempOther2 = tempOther;
-                while (temp->next) {
-                    temp = temp->next;
-                    tempOther = tempOther->next;
-                    newMatriz->set(temp->posR, temp->posC, temp->data - tempOther->data);
+                while ((temp && temp->next) || (tempOther && tempOther->next) ) { //la columna tiene next
+                    if(temp && tempOther && (temp->next && tempOther->next)) {
+                        temp = temp->next;
+                        tempOther = tempOther->next;
+                        if (temp && tempOther && temp->posC == tempOther->posC) //tienen el mismo colum
+                            newMatriz->set(temp->posR, temp->posC, temp->data - tempOther->data);
+                        else if (temp && tempOther && temp->posC > tempOther->posC) //tienen next pero diferente colum
+                            newMatriz->set(temp->posR, temp->posC, temp->data);
+                        else if (temp && tempOther && temp->posC < tempOther->posC) // tienen next pero diferente column
+                            newMatriz->set(tempOther->posR, tempOther->posC, -1*tempOther->data);
+                    }
+                    else if((temp && temp->next)){
+                        temp = temp->next;
+                        newMatriz->set(temp->posR, temp->posC, temp->data);
+                    }
+                    else if((tempOther && tempOther->next )){
+                        tempOther = tempOther->next;
+                        newMatriz->set(tempOther->posR, tempOther->posC, -1*tempOther->data);
+                    }
                 }
                 temp = temp2;
                 tempOther = tempOther2;
@@ -211,56 +241,17 @@ public:
         cout << endl;
     };
 
-    void toDelete(Node <T>* &temp){
-        while(temp->next){
-            toDelete(temp->next);
-        }
-        temp->killSelf();
-        temp = nullptr;
-    }
     ~Matrix(){
-/*
-        int iterC = columns-1;
-        int iterR = rows-1;
-
-        while(iterC || iterR){
-            auto tempR = &root;
-            auto tempC = &root;
-
-
-            while((*tempR)->down->down || (*tempC)->next->next){
-                if ((*tempR)->down->down) tempR = &((*tempR)->down->down);
-                if ((*tempC)->next->next) tempC = &((*tempC)->next->next);
-            }
-            while((*tempR)->next || (*tempC)->down){
-                if((*tempR)->next) tempR = &((*tempR)->next);
-                if((*tempC)->down) tempC = &((*tempC)->down);
-            }
-            delete *tempR;
-            delete *tempC;
-            tempR = nullptr;
-            tempC = nullptr;
-            iterC--;
-            iterR--;
-        }
-
-*/
-
-
-
 /*
     for(int i = rows; i >= 0; i--){
         auto temp = root;
-        while(temp->down){
-            temp = temp->down;
-        }
-        toDelete(temp);
-        //temp = nullptr;
+        for(int j = 0; j < i; j++)
+                temp = temp->down;
+        temp->killSelf();
     }
 
-
-
 */
+
     };
 protected:
 
